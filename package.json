@@ -19,7 +19,5 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "prisma": "^6.7.0"
-  },
-  "devDependencies": {
   }
 }
