@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // Função para criar um novo agendamento
-export const criarAgendamento = async (req, res) => {
+const criarAgendamento = async (req, res) => {
   const { nome, telefone, servico, profissional, horario } = req.body;
 
   if (!nome || !telefone || !servico || !profissional || !horario) {
@@ -25,4 +25,6 @@ export const criarAgendamento = async (req, res) => {
     res.status(500).json({ error: 'Erro interno ao tentar agendar.' });
   }
 };
+
+module.exports = { criarAgendamento };
 
