@@ -1,8 +1,8 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Função para criar um novo agendamento
-const criarAgendamento = async (req, res) => {
+export const criarAgendamento = async (req, res) => {
   const { nome, telefone, servico, profissional, horario } = req.body;
 
   if (!nome || !telefone || !servico || !profissional || !horario) {
@@ -12,11 +12,11 @@ const criarAgendamento = async (req, res) => {
   try {
     const novoAgendamento = await prisma.agendamento.create({
       data: {
-        nome,
-        telefone,
-        servico,
-        profissional,
-        horario,
+        nome: nome,
+        telefone: telefone,
+        servico: servico,
+        profissional: profissional,
+        horario: horario,
       },
     });
     res.status(201).json(novoAgendamento);
@@ -26,5 +26,4 @@ const criarAgendamento = async (req, res) => {
   }
 };
 
-module.exports = { criarAgendamento };
 
