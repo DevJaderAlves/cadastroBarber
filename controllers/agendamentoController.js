@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 export const criarAgendamento = async (req, res) => {
   const { nome, telefone, servico, profissional, horario } = req.body;
 
+    // Adicione essa linha aqui:
+    console.log('Corpo recebido na requisição:', req.body);
+
   if (!nome || !telefone || !servico || !profissional || !horario) {
     return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
   }
