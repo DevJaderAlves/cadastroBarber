@@ -1,24 +1,18 @@
+// agendamentoController.js
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// Função para criar um novo agendamento
+// Função para criar agendamento
 export const criarAgendamento = async (req, res) => {
   try {
     const { nome, telefone, servico, profissional, horario } = req.body;
 
-    // Validação simples
     if (!nome || !telefone || !servico || !profissional || !horario) {
       return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
     }
 
     const novoAgendamento = await prisma.agendamento.create({
-      data: {
-        nome: nome,
-        telefone: telefone,
-        servico: servico,
-        profissional: profissional,
-        horario: horario,
-      },
+      data: { nome, telefone, servico, profissional, horario }
     });
 
     return res.status(201).json(novoAgendamento);
@@ -27,6 +21,20 @@ export const criarAgendamento = async (req, res) => {
     return res.status(500).json({ error: 'Erro interno ao tentar agendar.' });
   }
 };
+
+// 🔥 Função para listar todos agendamentos
+export const listarAgendamentos = async (req, res) => {
+  try {
+    const agendamentos = await prisma.agendamento.findMany({
+      orderBy: { horario: 'asc' } // opcional: listar pelo horário
+    });
+    return res.json(agendamentos);
+  } catch (error) {
+    console.error('Erro ao buscar agendamentos:', error);
+    return res.status(500).json({ error: 'Erro interno ao buscar agendamentos.' });
+  }
+};
+
 
 
 
