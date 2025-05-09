@@ -26,14 +26,16 @@ export const criarAgendamento = async (req, res) => {
 export const listarAgendamentos = async (req, res) => {
   try {
     const agendamentos = await prisma.agendamento.findMany({
-      orderBy: { horario: 'asc' } // opcional: listar pelo horário
+      orderBy: { horario: 'asc' }
     });
     return res.json(agendamentos);
   } catch (error) {
-    console.error('Erro ao buscar agendamentos:', error);
-    return res.status(500).json({ error: 'Erro interno ao buscar agendamentos.' });
+    console.error('🔥 Erro ao buscar agendamentos:', error.message);
+    console.error('📦 Erro completo:', error);
+    return res.status(500).json({ error: error.message }); // <--- mande o erro real!
   }
 };
+
 
 
 
